@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Globentix CRM - Manager Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <nav class="top-nav">
+        <div class="nav-left">
+            <img src="Globentix_logo.png" alt="Globentix Technologies" class="company-logo">
+        </div>
+        <div class="nav-center">
+            <div class="search-container">
+                <input type="text" id="globalSearch" class="global-search" placeholder="Search leads, contacts, deals...">
+                <div id="searchResults" class="search-results"></div>
+            </div>
+        </div>
+        <div class="nav-right">
+            <button class="icon-btn" id="quickCreateBtn" title="Quick Create">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+            </button>
+            <button class="icon-btn notification-btn" id="notificationBtn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                </svg>
+                <span class="notification-badge">5</span>
+            </button>
+            <div class="user-menu-container">
+                <button class="user-avatar-btn" id="userMenuBtn">
+                    <div class="avatar">RK</div>
+                    <span class="user-name-short">Rajesh Kumar</span>
+                </button>
+                <div class="user-dropdown" id="userDropdown">
+                    <div class="user-info">
+                        <div class="avatar-large">RK</div>
+                        <div>
+                            <div class="user-name">Rajesh Kumar</div>
+                            <div class="user-role">Manager</div>
+                        </div>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <button class="dropdown-item" onclick="navigateTo('settings')">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 16v-4M12 8h.01"></path>
+                        </svg>
+                        My Profile
+                    </button>
+                    <button class="dropdown-item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="8.5" cy="7" r="4"></circle>
+                            <polyline points="17 11 19 13 23 9"></polyline>
+                        </svg>
+                        Switch Role
+                    </button>
+                    <button class="dropdown-item" onclick="logout()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Left Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <nav class="sidebar-nav">
+            <a href="#dashboard" class="nav-item active" data-page="dashboard">
+                <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                </svg>
+                <span class="nav-label">Dashboard</span>
+            </a>
+            <a href="#leads" class="nav-item" data-page="leads">
+                <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                <span class="nav-label">Leads</span>
+            </a>
+            <a href="#contacts" class="nav-item" data-page="contacts">
+                <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                <span class="nav-label">Contacts</span>
+            </a>
+            <a href="#accounts" class="nav-item" data-page="accounts">
+                <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span class="nav-label">Accounts</span>
+            </a>
+            <a href="#deals" class="nav-item" data-page="deals">
+                <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                </svg>
+                <span class="nav-label">Deals</span>
+            </a>
+            <a href="#tasks" class="nav-item" data-page="tasks">
+                <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 11l3 3L22 4"></path>
+                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                </svg>
+                <span class="nav-label">Tasks</span>
+            </a>
+            <a href="#reports" class="nav-item" data-page="reports">
+                <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="20" x2="12" y2="10"></line>
+                    <line x1="18" y1="20" x2="18" y2="4"></line>
+                    <line x1="6" y1="20" x2="6" y2="16"></line>
+                </svg>
+                <span class="nav-label">Reports</span>
+            </a>
+            <a href="#automation" class="nav-item" data-page="automation">
+                <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+                <span class="nav-label">Automation</span>
+            </a>
+            <a href="#team" class="nav-item" data-page="team">
+                <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                <span class="nav-label">Team</span>
+            </a>
+            <a href="#settings" class="nav-item" data-page="settings">
+                <svg class="nav-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M12 1v6m0 6v6m5.657-11.657l-4.243 4.243m-2.828 2.828l-4.243 4.243M23 12h-6m-6 0H1m16.657 5.657l-4.243-4.243m-2.828-2.828l-4.243-4.243"></path>
+                </svg>
+                <span class="nav-label">Settings</span>
+            </a>
+        </nav>
+        
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content" id="mainContent">
+        <!-- Dashboard Page -->
+        <div id="dashboardPage" class="page active">
+            <div class="page-header">
+                <h1>Dashboard</h1>
+                <div class="page-actions">
+                    <button class="btn btn-secondary" onclick="refreshDashboard()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+                        </svg>
+                        Refresh
+                    </button>
+                    <button class="btn btn-primary" onclick="exportDashboard()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Export
+                    </button>
+                </div>
+            </div>
+
+            <!-- KPI Metrics -->
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #E3F2FD;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1E88E5" stroke-width="2">
+                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                    </div>
+                    <div class="kpi-content">
+                        <div class="kpi-title">Pipeline Value</div>
+                        <div class="kpi-value">₹45,50,000</div>
+                        <div class="kpi-trend trend-up">
+                            <span>↑ 12%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #E8F5E9;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                    </div>
+                    <div class="kpi-content">
+                        <div class="kpi-title">Deals Won This Month</div>
+                        <div class="kpi-value">28</div>
+                        <div class="kpi-trend trend-up">
+                            <span>↑ 8%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #FFF3E0;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFC107" stroke-width="2">
+                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                        </svg>
+                    </div>
+                    <div class="kpi-content">
+                        <div class="kpi-title">Conversion Rate</div>
+                        <div class="kpi-value">24%</div>
+                        <div class="kpi-trend trend-up">
+                            <span>↑ 3%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #F3E5F5;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9C27B0" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M12 6v6l4 2"></path>
+                        </svg>
+                    </div>
+                    <div class="kpi-content">
+                        <div class="kpi-title">Revenue Target Progress</div>
+                        <div class="kpi-value">78%</div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" style="width: 78%;"></div>
+                        </div>
+                        <div class="kpi-subtitle">of ₹60,00,000</div>
+                    </div>
+                </div>
+
+                <div class="kpi-card">
+                    <div class="kpi-icon" style="background: #FFEBEE;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F44336" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                    </div>
+                    <div class="kpi-content">
+                        <div class="kpi-title">Overdue Tasks</div>
+                        <div class="kpi-value">7</div>
+                        <div class="kpi-trend trend-down">
+                            <span>↓ 2</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="dashboard-grid">
+                <div class="dashboard-card" style="grid-column: span 2;">
+                    <div class="card-header">
+                        <h3>Pipeline Funnel</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="funnel-chart" id="funnelChart"></div>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>Team Performance Leaderboard</h3>
+                    </div>
+                    <div class="card-body">
+                        <div id="teamLeaderboard"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid" style="margin-top: 24px;">
+                <div class="dashboard-card" style="grid-column: span 2;">
+                    <div class="card-header">
+                        <h3>Activity Heatmap</h3>
+                    </div>
+                    <div class="card-body">
+                        <div id="activityHeatmap"></div>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>Alerts &amp; Quick Actions</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert-list">
+                            <div class="alert-item">
+                                <div class="alert-icon" style="background: #FFF3E0; color: #FFC107;">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                    </svg>
+                                </div>
+                                <div class="alert-content">
+                                    <div class="alert-title">5 Pending Approvals</div>
+                                    <div class="alert-desc">Review discount requests</div>
+                                </div>
+                                <button class="btn btn-sm btn-primary" onclick="navigateTo('automation')">Review</button>
+                            </div>
+                            <div class="alert-item">
+                                <div class="alert-icon" style="background: #FFEBEE; color: #F44336;">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                                        <line x1="12" y1="9" x2="12" y2="13"></line>
+                                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                                    </svg>
+                                </div>
+                                <div class="alert-content">
+                                    <div class="alert-title">12 Untouched Leads</div>
+                                    <div class="alert-desc">No activity for 3+ days</div>
+                                </div>
+                                <button class="btn btn-sm btn-primary" onclick="navigateTo('leads')">Assign</button>
+                            </div>
+                            <div class="alert-item">
+                                <div class="alert-icon" style="background: #FFEBEE; color: #F44336;">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="alert-content">
+                                    <div class="alert-title">3 SLA Breaches</div>
+                                    <div class="alert-desc">Immediate action required</div>
+                                </div>
+                                <button class="btn btn-sm btn-danger" onclick="showToast('Escalation initiated', 'success')">Escalate</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leads Page -->
+        <div id="leadsPage" class="page">
+            <div class="page-header">
+                <div>
+                    <h1>Leads</h1>
+                    <div class="breadcrumb">Home / Leads</div>
+                </div>
+                <div class="page-actions">
+                    <button class="btn btn-secondary" onclick="exportTableData()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Export
+                    </button>
+                    <button class="btn btn-primary" onclick="openLeadModal()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Add Lead
+                    </button>
+                </div>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="showLeads">Show Leads</button>
+                <button class="tab-btn" data-tab="industryLeads">Industry Leads</button>
+            </div>
+
+            <div class="tab-content active" id="showLeads">
+                <div class="table-controls">
+                    <input type="text" id="showLeadsSearch" class="table-search" placeholder="Search leads...">
+                    <div class="filter-group">
+                        <select id="statusFilter" class="filter-select">
+                            <option value="">All Status</option>
+                            <option value="New">New</option>
+                            <option value="Contacted">Contacted</option>
+                            <option value="Qualified">Qualified</option>
+                            <option value="Lost">Lost</option>
+                        </select>
+                        <select id="sourceFilter" class="filter-select">
+                            <option value="">All Sources</option>
+                            <option value="Email">Email</option>
+                            <option value="LinkedIn">LinkedIn</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="bulk-action-bar" id="bulkActionBar" style="display: none;">
+                    <span id="selectedCount">0 selected</span>
+                    <div class="bulk-actions">
+                        <button class="btn btn-sm btn-secondary" onclick="bulkChangeStatus()">Change Status</button>
+                        <button class="btn btn-sm btn-secondary" onclick="bulkAssign()">Assign Owner</button>
+                        <button class="btn btn-sm btn-danger" onclick="bulkDelete()">Delete</button>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th width="40"><input type="checkbox" id="selectAllShowLeads"></th>
+                                <th>Contact Name</th>
+                                <th>Job Title</th>
+                                <th>Show Name</th>
+                                <th>Company Name</th>
+                                <th>Show Date</th>
+                                <th>Attendees</th>
+                                <th>Source</th>
+                                <th>Status</th>
+                                <th width="100">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="showLeadsTable">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="tab-content" id="industryLeads">
+                <div class="table-controls">
+                    <input type="text" id="industryLeadsSearch" class="table-search" placeholder="Search leads...">
+                    <div class="filter-group">
+                        <select id="industryStatusFilter" class="filter-select">
+                            <option value="">All Status</option>
+                            <option value="New">New</option>
+                            <option value="Contacted">Contacted</option>
+                            <option value="Qualified">Qualified</option>
+                            <option value="Lost">Lost</option>
+                        </select>
+                        <select id="industrySourceFilter" class="filter-select">
+                            <option value="">All Sources</option>
+                            <option value="Email">Email</option>
+                            <option value="LinkedIn">LinkedIn</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th width="40"><input type="checkbox" id="selectAllIndustryLeads"></th>
+                                <th>Contact Name</th>
+                                <th>Job Title</th>
+                                <th>Company Name</th>
+                                <th>Country</th>
+                                <th>Source</th>
+                                <th>Status</th>
+                                <th width="100">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="industryLeadsTable">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contacts Page -->
+        <div id="contactsPage" class="page">
+            <div class="page-header">
+                <div>
+                    <h1>Contacts</h1>
+                    <div class="breadcrumb">Home / Contacts</div>
+                </div>
+                <div class="page-actions">
+                    <button class="btn btn-secondary" onclick="exportTableData()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Export
+                    </button>
+                    <button class="btn btn-primary" onclick="openContactModal()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Add Contact
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-controls">
+                <input type="text" id="contactsSearch" class="table-search" placeholder="Search contacts...">
+            </div>
+
+            <div class="table-wrapper">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Company</th>
+                            <th>Owner</th>
+                            <th>Last Activity</th>
+                            <th width="100">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contactsTable">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Accounts Page -->
+        <div id="accountsPage" class="page">
+            <div class="page-header">
+                <div>
+                    <h1>Accounts</h1>
+                    <div class="breadcrumb">Home / Accounts</div>
+                </div>
+                <div class="page-actions">
+                    <button class="btn btn-secondary" onclick="exportTableData()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Export
+                    </button>
+                    <button class="btn btn-primary" onclick="openAccountModal()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Add Account
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-controls">
+                <input type="text" id="accountsSearch" class="table-search" placeholder="Search accounts...">
+            </div>
+
+            <div class="table-wrapper">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Account Name</th>
+                            <th>Industry</th>
+                            <th>Location</th>
+                            <th>Owner</th>
+                            <th>Revenue</th>
+                            <th>Employees</th>
+                            <th>Status</th>
+                            <th width="100">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="accountsTable">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Deals Page (Kanban) -->
+        <div id="dealsPage" class="page">
+            <div class="page-header">
+                <div>
+                    <h1>Deals Pipeline</h1>
+                    <div class="breadcrumb">Home / Deals</div>
+                </div>
+                <div class="page-actions">
+                    <button class="btn btn-secondary" id="viewToggle" onclick="toggleDealsView()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="8" y1="6" x2="21" y2="6"></line>
+                            <line x1="8" y1="12" x2="21" y2="12"></line>
+                            <line x1="8" y1="18" x2="21" y2="18"></line>
+                            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                        </svg>
+                        List View
+                    </button>
+                    <button class="btn btn-primary" onclick="openDealModal()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Add Deal
+                    </button>
+                </div>
+            </div>
+
+            <div id="kanbanView" class="kanban-container">
+            </div>
+        </div>
+
+        <!-- Tasks Page -->
+        <div id="tasksPage" class="page">
+            <div class="page-header">
+                <div>
+                    <h1>Tasks</h1>
+                    <div class="breadcrumb">Home / Tasks</div>
+                </div>
+                <div class="page-actions">
+                    <button class="btn btn-primary" onclick="openTaskModal()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Add Task
+                    </button>
+                </div>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="myTasks">My Tasks</button>
+                <button class="tab-btn" data-tab="teamTasks">Team Tasks</button>
+            </div>
+
+            <div class="tab-content active" id="myTasks">
+                <div class="table-controls">
+                    <input type="text" id="tasksSearch" class="table-search" placeholder="Search tasks...">
+                    <div class="filter-group">
+                        <select id="taskStatusFilter" class="filter-select">
+                            <option value="">All Status</option>
+                            <option value="Open">Open</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Overdue">Overdue</option>
+                        </select>
+                        <select id="taskPriorityFilter" class="filter-select">
+                            <option value="">All Priority</option>
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th width="40"><input type="checkbox"></th>
+                                <th>Subject</th>
+                                <th>Related To</th>
+                                <th>Due Date</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+                                <th>Assigned To</th>
+                                <th width="100">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tasksTable">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="tab-content" id="teamTasks">
+                <div class="empty-state">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    <h3>Team Tasks</h3>
+                    <p>View all tasks assigned to your team members</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reports Page -->
+        <div id="reportsPage" class="page">
+            <div class="page-header">
+                <div>
+                    <h1>Reports</h1>
+                    <div class="breadcrumb">Home / Reports</div>
+                </div>
+                <div class="page-actions">
+                    <button class="btn btn-primary" onclick="openReportBuilder()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Create Report
+                    </button>
+                </div>
+            </div>
+
+            <div class="reports-grid" id="reportsGrid">
+            </div>
+        </div>
+
+        <!-- Automation Page -->
+        <div id="automationPage" class="page">
+            <div class="page-header">
+                <div>
+                    <h1>Automation</h1>
+                    <div class="breadcrumb">Home / Automation</div>
+                </div>
+                <div class="page-actions">
+                    <button class="btn btn-primary" onclick="openWorkflowBuilder()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Create Workflow
+                    </button>
+                </div>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="workflows">Workflows</button>
+                <button class="tab-btn" data-tab="approvals">Approval Requests</button>
+            </div>
+
+            <div class="tab-content active" id="workflows">
+                <div class="workflows-grid" id="workflowsGrid">
+                </div>
+            </div>
+
+            <div class="tab-content" id="approvals">
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Request Type</th>
+                                <th>Requested By</th>
+                                <th>Value</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th width="100">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="approvalsTable">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Page -->
+        <div id="teamPage" class="page">
+            <div class="page-header">
+                <div>
+                    <h1>Team Management</h1>
+                    <div class="breadcrumb">Home / Team</div>
+                </div>
+                <div class="page-actions">
+                    <button class="btn btn-primary" onclick="openTeamMemberModal()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Add Team Member
+                    </button>
+                </div>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="teamOverview">Team Overview</button>
+                <button class="tab-btn" data-tab="rolePermissions">Role Permissions</button>
+                <button class="tab-btn" data-tab="territories">Territories</button>
+            </div>
+
+            <div class="tab-content active" id="teamOverview">
+                <div class="table-wrapper">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Rep Name</th>
+                                <th>Role</th>
+                                <th>Territory</th>
+                                <th>Quota</th>
+                                <th>Achieved</th>
+                                <th>Achievement %</th>
+                                <th>Last Login</th>
+                                <th>Status</th>
+                                <th width="100">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="teamMembersTable">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="tab-content" id="rolePermissions">
+                <div class="permissions-matrix" id="permissionsMatrix">
+                </div>
+            </div>
+
+            <div class="tab-content" id="territories">
+                <div class="territories-grid" id="territoriesGrid">
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Page -->
+        <div id="settingsPage" class="page">
+            <div class="page-header">
+                <div>
+                    <h1>Settings</h1>
+                    <div class="breadcrumb">Home / Settings</div>
+                </div>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="profileSettings">Profile</button>
+                <button class="tab-btn" data-tab="accountSecurity">Account &amp; Security</button>
+                <button class="tab-btn" data-tab="notificationPrefs">Notifications</button>
+                <button class="tab-btn" data-tab="companySettings">Company Settings</button>
+            </div>
+
+            <div class="tab-content active" id="profileSettings">
+                <div class="settings-card">
+                    <h3>Profile Settings</h3>
+                    <form id="profileForm" onsubmit="saveProfile(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Profile Picture</label>
+                                <div class="profile-upload">
+                                    <div class="avatar-large">RK</div>
+                                    <input type="file" id="profilePicture" accept="image/*" style="display: none;">
+                                    <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('profilePicture').click()">Change Photo</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Full Name <span class="required">*</span></label>
+                                <input type="text" class="form-control" value="Rajesh Kumar" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Username</label>
+                                <input type="text" class="form-control" value="rajesh.kumar" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Email <span class="required">*</span></label>
+                                <input type="email" class="form-control" value="rajesh.kumar@globentix.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input type="tel" class="form-control" value="+91 98765 43210">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Role</label>
+                                <input type="text" class="form-control" value="Manager" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>Department</label>
+                                <input type="text" class="form-control" value="Sales">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Time Zone</label>
+                                <select class="form-control">
+                                    <option>(UTC+05:30) India Standard Time</option>
+                                    <option>(UTC+00:00) GMT</option>
+                                    <option>(UTC-05:00) Eastern Time</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Date Format</label>
+                                <select class="form-control">
+                                    <option>DD/MM/YYYY</option>
+                                    <option>MM/DD/YYYY</option>
+                                    <option>YYYY-MM-DD</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="tab-content" id="accountSecurity">
+                <div class="settings-card">
+                    <h3>Change Password</h3>
+                    <form id="passwordForm" onsubmit="changePassword(event)">
+                        <div class="form-group">
+                            <label>Current Password</label>
+                            <input type="password" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>New Password</label>
+                            <input type="password" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm New Password</label>
+                            <input type="password" class="form-control" required>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Update Password</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="settings-card" style="margin-top: 24px;">
+                    <h3>Two-Factor Authentication</h3>
+                    <div class="setting-item">
+                        <div>
+                            <div class="setting-title">Enable 2FA</div>
+                            <div class="setting-desc">Add an extra layer of security to your account</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="2faToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="settings-card" style="margin-top: 24px;">
+                    <h3>Login History</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Date &amp; Time</th>
+                                <th>Device</th>
+                                <th>Location</th>
+                                <th>IP Address</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Oct 27, 2025 2:00 PM</td>
+                                <td>Chrome on Windows</td>
+                                <td>Noida, India</td>
+                                <td>49.207.xxx.xxx</td>
+                            </tr>
+                            <tr>
+                                <td>Oct 27, 2025 9:15 AM</td>
+                                <td>Chrome on Windows</td>
+                                <td>Noida, India</td>
+                                <td>49.207.xxx.xxx</td>
+                            </tr>
+                            <tr>
+                                <td>Oct 26, 2025 6:30 PM</td>
+                                <td>Safari on iPhone</td>
+                                <td>Delhi, India</td>
+                                <td>49.207.xxx.xxx</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="tab-content" id="notificationPrefs">
+                <div class="settings-card">
+                    <h3>Email Notifications</h3>
+                    <div class="setting-item">
+                        <div class="setting-title">New Lead Assigned</div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-title">Deal Stage Changed</div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-title">Task Assigned</div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-title">Daily Summary Report</div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-title">Weekly Performance Report</div>
+                        <label class="toggle-switch">
+                            <input type="checkbox">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-title">Approval Requests</div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="settings-card" style="margin-top: 24px;">
+                    <h3>Push Notifications</h3>
+                    <div class="setting-item">
+                        <div class="setting-title">Enable Browser Notifications</div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-title">Show Desktop Alerts</div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-title">Play Notification Sound</div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-actions" style="margin-top: 24px;">
+                    <button class="btn btn-primary" onclick="saveNotificationPreferences()">Save Preferences</button>
+                </div>
+            </div>
+
+            <div class="tab-content" id="companySettings">
+                <div class="settings-card">
+                    <h3>Company Information</h3>
+                    <form id="companyForm" onsubmit="saveCompanySettings(event)">
+                        <div class="form-group">
+                            <label>Company Name</label>
+                            <input type="text" class="form-control" value="Globentix Technologies" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Industry</label>
+                            <input type="text" class="form-control" value="IT Services &amp; Consulting">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Company Email</label>
+                                <input type="email" class="form-control" value="info@globentix.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Company Phone</label>
+                                <input type="tel" class="form-control" value="+91 11 4567 8900">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Address</label>
+                            <textarea class="form-control" rows="3">Sector 62, Noida, Uttar Pradesh, India</textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Fiscal Year Start</label>
+                                <select class="form-control">
+                                    <option>April</option>
+                                    <option>January</option>
+                                    <option>July</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Currency</label>
+                                <select class="form-control">
+                                    <option>INR (₹)</option>
+                                    <option>USD ($)</option>
+                                    <option>EUR (€)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modals -->
+    <!-- Lead Modal -->
+    <div id="leadModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2 id="leadModalTitle">Add Lead</h2>
+                <button class="modal-close" onclick="closeModal('leadModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="leadForm">
+                    <input type="hidden" id="leadId">
+                    <input type="hidden" id="leadType">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Client Email <span class="required">*</span></label>
+                            <input type="email" id="clientEmail" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Contact Name <span class="required">*</span></label>
+                            <input type="text" id="contactName" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Job Title</label>
+                            <input type="text" id="jobTitle" class="form-control">
+                        </div>
+                        <div class="form-group" id="showNameGroup">
+                            <label>Show Name <span class="required">*</span></label>
+                            <input type="text" id="showName" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-row" id="showDetailsGroup">
+                        <div class="form-group">
+                            <label>Show Website</label>
+                            <input type="url" id="showWebsite" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Show Date</label>
+                            <input type="date" id="showDate" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-row" id="attendeeGroup">
+                        <div class="form-group">
+                            <label>Attendee Count</label>
+                            <input type="number" id="attendeeCount" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Company Name <span class="required">*</span></label>
+                            <input type="text" id="companyName" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Company Website</label>
+                            <input type="url" id="companyWebsite" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Company Country</label>
+                            <select id="companyCountry" class="form-control">
+                                <option value="">Select Country</option>
+                                <option>India</option>
+                                <option>USA</option>
+                                <option>UK</option>
+                                <option>UAE</option>
+                                <option>Singapore</option>
+                                <option>Australia</option>
+                                <option>Germany</option>
+                                <option>Canada</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Client/Company Phone</label>
+                            <input type="tel" id="phone" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Lead Source</label>
+                            <select id="leadSource" class="form-control">
+                                <option value="Email">Email</option>
+                                <option value="LinkedIn">LinkedIn</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email Message</label>
+                        <textarea id="emailMessage" class="form-control" rows="4"></textarea>
+                    </div>
+
+                    <div class="form-group" id="keyPointsGroup">
+                        <label>Key Points</label>
+                        <textarea id="keyPoints" class="form-control" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>File Attachment</label>
+                            <input type="file" id="fileAttachment" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select id="status" class="form-control">
+                                <option value="New">New</option>
+                                <option value="Contacted">Contacted</option>
+                                <option value="Qualified">Qualified</option>
+                                <option value="Lost">Lost</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('leadModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveLead()">Save Lead</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deal Modal -->
+    <div id="dealModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="dealModalTitle">Add Deal</h2>
+                <button class="modal-close" onclick="closeModal('dealModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="dealForm">
+                    <input type="hidden" id="dealId">
+                    
+                    <div class="form-group">
+                        <label>Deal Name <span class="required">*</span></label>
+                        <input type="text" id="dealName" class="form-control" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Account</label>
+                            <input type="text" id="dealAccount" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Amount <span class="required">*</span></label>
+                            <input type="number" id="dealAmount" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Close Date</label>
+                            <input type="date" id="closeDate" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Stage</label>
+                            <select id="dealStage" class="form-control">
+                                <option value="Prospecting">Prospecting</option>
+                                <option value="Qualification">Qualification</option>
+                                <option value="Negotiation">Negotiation</option>
+                                <option value="Closed Won">Closed Won</option>
+                                <option value="Closed Lost">Closed Lost</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Owner</label>
+                            <select id="dealOwner" class="form-control">
+                                <option>Rajesh Kumar</option>
+                                <option>Priya Sharma</option>
+                                <option>Amit Patel</option>
+                                <option>Sneha Reddy</option>
+                                <option>Vikram Singh</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Lead Source</label>
+                            <select id="dealLeadSource" class="form-control">
+                                <option>Email</option>
+                                <option>LinkedIn</option>
+                                <option>Website</option>
+                                <option>Referral</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="dealDescription" class="form-control" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('dealModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveDeal()">Save Deal</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Task Modal -->
+    <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Task</h2>
+                <button class="modal-close" onclick="closeModal('taskModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="taskForm">
+                    <div class="form-group">
+                        <label>Subject <span class="required">*</span></label>
+                        <input type="text" id="taskSubject" class="form-control" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Related To</label>
+                            <input type="text" id="taskRelatedTo" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Due Date</label>
+                            <input type="date" id="taskDueDate" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Priority</label>
+                            <select id="taskPriority" class="form-control">
+                                <option value="High">High</option>
+                                <option value="Medium" selected>Medium</option>
+                                <option value="Low">Low</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select id="taskStatus" class="form-control">
+                                <option value="Open" selected>Open</option>
+                                <option value="In Progress">In Progress</option>
+                                <option value="Completed">Completed</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Assigned To</label>
+                        <select id="taskAssignedTo" class="form-control">
+                            <option>Rajesh Kumar</option>
+                            <option>Priya Sharma</option>
+                            <option>Amit Patel</option>
+                            <option>Sneha Reddy</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="taskDescription" class="form-control" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('taskModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveTask()">Save Task</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h2>Confirm Delete</h2>
+                <button class="modal-close" onclick="closeModal('deleteModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="deleteMessage">Are you sure you want to delete this record?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('deleteModal')">Cancel</button>
+                <button class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
